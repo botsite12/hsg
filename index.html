@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HSG English - Login & Register</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* LỚP NỀN GIF */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* Thay link GIF của bạn vào đây */
+            background-image: url('https://i.pinimg.com/originals/db/20/9a/db209aa7d3dadb38c9335ddfd45a67fd.gif');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+        }
+
+        /* LỚP PHỦ MỜ (OVERLAY) để nhìn rõ Form */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6); /* Màu xanh đen mờ */
+            backdrop-filter: blur(3px); /* Làm mờ nhẹ nền GIF */
+            z-index: -1;
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.95); /* Trắng đục */
+            width: 100%; 
+            max-width: 400px;
+            padding: 40px; 
+            border-radius: 24px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* --- PHẦN CSS CÒN LẠI GIỮ NGUYÊN --- */
+        .tabs { display: flex; background: #f1f5f9; padding: 5px; border-radius: 12px; margin-bottom: 30px; }
+        .tab { flex: 1; padding: 10px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; color: #64748b; background: transparent; transition: 0.3s; }
+        .tab.active { background: white; color: #1e3a8a; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .form-content { display: none; }
+        .form-content.active { display: block; animation: fadeIn 0.4s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { color: #1e3a8a; margin-bottom: 20px; text-align: center; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; color: #475569; }
+        .input-field { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 10px; display: flex; align-items: center; }
+        .input-field i { color: #94a3b8; margin-right: 10px; width: 20px; text-align: center; }
+        .input-field input { border: none; background: transparent; outline: none; width: 100%; font-size: 15px; }
+        .btn-submit { width: 100%; background: #1e3a8a; color: white; border: none; padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 16px; margin-top: 15px; transition: 0.3s; }
+        .btn-submit:hover { background: #3b82f6; transform: translateY(-2px); }
+        .footer-text { text-align: center; margin-top: 20px; font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('login')">Đăng nhập</button>
+            <button class="tab" onclick="switchTab('register')">Đăng ký</button>
+        </div>
+
+        <div id="login-form" class="form-content active">
+            <h2>Đăng Nhập</h2>
+            <form onsubmit="handleAuth(event)">
+                <div class="input-group">
+                    <label>Tài khoản</label>
+                    <div class="input-field"><i class="fas fa-user"></i><input type="text" placeholder="Username" required></div>
+                </div>
+                <div class="input-group">
+                    <label>Mật khẩu</label>
+                    <div class="input-field"><i class="fas fa-lock"></i><input type="password" placeholder="••••••••" required></div>
+                </div>
+                <button type="submit" class="btn-submit">Bắt đầu học</button>
+            </form>
+        </div>
+
+        <div id="register-form" class="form-content">
+            <h2>Đăng Ký</h2>
+            <form onsubmit="handleAuth(event)">
+                <div class="input-group">
+                    <label>Họ và tên</label>
+                    <div class="input-field"><i class="fas fa-id-card"></i><input type="text" placeholder="Nguyễn Văn A" required></div>
+                </div>
+                <div class="input-group">
+                    <label>Email</label>
+                    <div class="input-field"><i class="fas fa-envelope"></i><input type="email" placeholder="hocsinhgioi@gmail.com" required></div>
+                </div>
+                <div class="input-group">
+                    <label>Mật khẩu</label>
+                    <div class="input-field"><i class="fas fa-key"></i><input type="password" placeholder="Tạo mật khẩu" required></div>
+                </div>
+                <button type="submit" class="btn-submit">Tạo tài khoản</button>
+            </form>
+        </div>
+
+        <p class="footer-text">HSG Mastery Academic</p>
+    </div>
+
+    <script>
+        function switchTab(type) {
+            const tabs = document.querySelectorAll('.tab');
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            tabs.forEach(t => t.classList.remove('active'));
+            if(type === 'login') {
+                tabs[0].classList.add('active'); loginForm.classList.add('active'); registerForm.classList.remove('active');
+            } else {
+                tabs[1].classList.add('active'); registerForm.classList.add('active'); loginForm.classList.remove('active');
+            }
+        }
+
+        function handleAuth(e) {
+            e.preventDefault();
+            window.location.href = "hsg.html";
+        }
+    </script>
+</body>
+</html>

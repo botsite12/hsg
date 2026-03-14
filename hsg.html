@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>25 Chuyên Đề Ngữ Pháp Tiếng Anh HSG • Học Liệu Dashboard</title>
+    <style>
+        :root {
+            --dark-blue: #2c3e50;
+            --accent: #e67e22;
+            --bg-sidebar: #2c3e50;
+            --text-sidebar: #ffffff;
+            --bg-main: #ecf0f1;
+            --text-main: #2c3e50;
+            --card-bg: #ffffff;
+            --border: #bdc3c7;
+        }
+
+        body.light-theme {
+            --bg-sidebar: #f8f9fa;
+            --text-sidebar: #2c3e50;
+            --bg-main: #ffffff;
+            --text-main: #2c3e50;
+            --card-bg: #f8f9fa;
+            --border: #e5e7eb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            transition: background 0.4s, color 0.4s;
+        }
+        
+        .container { display: flex; min-height: 100vh; }
+        
+        .sidebar {
+            width: 320px;
+            background: var(--bg-sidebar);
+            color: var(--text-sidebar);
+            padding: 20px;
+            box-shadow: 3px 0 15px rgba(0,0,0,0.15);
+            overflow-y: auto;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+        
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 15px;
+        }
+        
+        .sidebar-header h1 {
+            font-size: 1.35rem;
+            color: var(--text-sidebar);
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.15);
+            color: var(--text-sidebar);
+        }
+        
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .topic-list { list-style: none; }
+        
+        .topic-list li {
+            padding: 15px 18px;
+            margin-bottom: 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .topic-list li:hover,
+        .topic-list li.active {
+            background: var(--accent);
+            color: white;
+            transform: translateX(10px);
+        }
+        
+        .main {
+            flex: 1;
+            background: var(--bg-main);
+            padding: 25px;
+            overflow-y: auto;
+            transition: background 0.4s;
+        }
+        
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--accent);
+        }
+        
+        .main-header h2 {
+            color: var(--text-main);
+            font-size: 1.9rem;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .menu-btn {
+            display: none;
+            font-size: 1.8rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .theme-btn {
+            font-size: 1.6rem;
+            background: none;
+            border: none;
+            color: var(--text-main);
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+        }
+        
+        .content-area { max-width: 920px; margin: 0 auto; }
+        
+        .section {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 28px;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+            border: 1px solid var(--border);
+        }
+        
+        .welcome-hero {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .welcome-hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .formula {
+            background: #fff3e0;
+            border: 3px solid var(--accent);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 22px 0;
+            font-family: monospace;
+            font-size: 1.05rem;
+            line-height: 1.85;
+            overflow-x: auto;
+        }
+        
+        .example-box {
+            margin: 18px 0;
+            padding: 18px;
+            background: rgba(230, 126, 34, 0.08);
+            border-left: 6px solid var(--accent);
+            border-radius: 8px;
+        }
+        
+        .note-box {
+            background: #fff0f0;
+            border: 2px dashed #e74c3c;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -320px;
+                width: 300px;
+                height: 100vh;
+                box-shadow: 5px 0 20px rgba(0,0,0,0.3);
+                z-index: 999;
+            }
+            .sidebar.open { left: 0; }
+            .menu-btn { display: block; }
+            .main { padding: 15px; }
+        }
+        
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .sidebar { width: 280px; }
+        }
+        
+        .topic-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            text-align: center;
+            border-radius: 50%;
+            font-size: 0.95rem;
+            line-height: 30px;
+            margin-right: 12px;
+        }
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 998;
+        }
+        .overlay.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h1>📚 NGỮ PHÁP TIẾNG ANH HSG</h1>
+                <p style="font-size:0.95rem; opacity:0.9; margin-top:8px;">25 Chuyên Đề Nâng Cao</p>
+            </div>
+            
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Tìm chuyên đề...">
+            </div>
+            
+            <ul class="topic-list" id="topicList"></ul>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main">
+            <div class="main-header">
+                <button id="menuBtn" class="menu-btn">☰</button>
+                <h2 id="currentTitle">Chào mừng bạn!</h2>
+                <button id="themeToggle" class="theme-btn">🌙</button>
+            </div>
+            
+            <div class="content-area" id="contentArea"></div>
+        </div>
+    </div>
+
+    <!-- Overlay mobile -->
+    <div class="overlay" id="overlay"></div>
+
+    <script>
+        // ==================== DỮ LIỆU ĐẦY ĐỦ 25 CHUYÊN ĐỀ + GIỚI THIỆU ====================
+        const grammarTopics = [
+            {
+                id: 0,
+                title: "0. Giới thiệu - Học Liệu Ngữ Pháp HSG",
+                def: "Chào mừng bạn đến với <strong>25 Chuyên Đề Ngữ Pháp Tiếng Anh Học Sinh Giỏi</strong> – bộ học liệu tương tác được thiết kế riêng cho học sinh THPT tham gia kỳ thi HSG Quốc gia, HSG tỉnh và các cuộc thi tiếng Anh lớn.<br><br>Bộ tài liệu này tập trung vào mức độ nâng cao (Advanced), giúp bạn nắm chắc những cấu trúc khó, lỗi sai thường gặp và kỹ thuật làm bài hiệu quả nhất.",
+                formula: `
+                    <h3 style="color:#e67e22;">Tại sao nên dùng học liệu này?</h3>
+                    <ul style="margin-left:20px;">
+                        <li>✅ 25 chuyên đề trọng tâm thi HSG</li>
+                        <li>✅ Nội dung tóm tắt nhưng cực kỳ chuyên sâu</li>
+                        <li>✅ Ví dụ từ cơ bản đến nâng cao (cấp HSG)</li>
+                        <li>✅ Giao diện đẹp, responsive trên điện thoại & iPad</li>
+                        <li>✅ Chuyển nền Đen/Trắng chỉ với 1 nút</li>
+                        <li>✅ Tìm kiếm nhanh, không cần tải lại trang</li>
+                    </ul>
+                    <p style="margin-top:20px; font-size:1.1rem;">Nhấn vào bất kỳ chuyên đề nào bên trái để bắt đầu học ngay!</p>
+                `,
+                examples: [
+                    { label: "Hướng dẫn", text: "Click vào sidebar → nội dung tự động thay đổi" },
+                    { label: "Mẹo học hiệu quả", text: "Ôn 1 chuyên đề mỗi ngày + làm bài tập sentence transformation" }
+                ],
+                notes: "Bộ học liệu được tối ưu hoàn toàn offline. Bạn có thể lưu file HTML này và mở mọi lúc, mọi nơi. Chúc bạn ôn thi thành công và đạt điểm 9-10 môn Tiếng Anh!"
+            },
+            // ==================== 25 CHUYÊN ĐỀ ĐẦY ĐỦ (khôi phục nguyên bản) ====================
+            {
+                id: 1,
+                title: "1. Tenses (12 thì & sự phối hợp thì)",
+                def: "Tiếng Anh có 12 thì (tenses) để diễn tả thời gian và khía cạnh của hành động. Sự phối hợp thì (sequence of tenses) rất quan trọng trong câu phức, đặc biệt trong reported speech, conditionals và mệnh đề thời gian.",
+                formula: `
+                    <h3>12 Thì Chính & Công Thức Cơ Bản</h3>
+                    <ul>
+                        <li><strong>Present Simple:</strong> S + V(s/es)</li>
+                        <li><strong>Present Continuous:</strong> S + am/is/are + V-ing</li>
+                        <li><strong>Present Perfect:</strong> S + have/has + V3/ed</li>
+                        <li><strong>Past Simple:</strong> S + V2/ed</li>
+                        <li><strong>Past Perfect:</strong> S + had + V3/ed</li>
+                        <li><strong>Future Perfect:</strong> S + will have + V3/ed</li>
+                    </ul>
+                    <p><strong>Phối hợp thì quan trọng:</strong> When + Past Simple, Past Perfect (hành động xảy ra trước).</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "She usually goes to school by bus. (Present Simple)" },
+                    { label: "Nâng cao HSG", text: "By the time the teacher arrived, the students had already finished the test. (Past Perfect trong mệnh đề thời gian)" }
+                ],
+                notes: "Lưu ý: Không dùng Present Continuous với động từ trạng thái (stative verbs) như know, believe, own. Sai phổ biến: 'I am knowing' → 'I know'."
+            },
+            {
+                id: 2,
+                title: "2. Passive Voice (Các dạng đặc biệt)",
+                def: "Câu bị động nhấn mạnh hành động hoặc người/thứ bị tác động. Công thức chung: S + be + V3/ed + (by + O).",
+                formula: `
+                    <h3>Các Dạng Đặc Biệt</h3>
+                    <ul>
+                        <li><strong>Causative:</strong> have/get + O + V3/ed (have something done)</li>
+                        <li><strong>Modal Passive:</strong> S + modal + be + V3/ed</li>
+                        <li><strong>Double Object:</strong> He was given a prize. / A prize was given to him.</li>
+                    </ul>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "The letter was written by Tom." },
+                    { label: "Nâng cao HSG", text: "The thief is believed to have escaped through the window. (Passive với infinitive)" }
+                ],
+                notes: "Ngoại lệ: Động từ không dùng bị động: happen, occur, take place, belong to..."
+            },
+            {
+                id: 3,
+                title: "3. Reported Speech",
+                def: "Lời nói gián tiếp: thay đổi thì, đại từ, trạng từ chỉ thời gian/địa điểm.",
+                formula: `
+                    <h3>Quy Tắc Chuyển Đổi</h3>
+                    <p>Present Simple → Past Simple<br>
+                    Will → would<br>
+                    Here → there, now → then, today → that day</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "He said, 'I am tired.' → He said he was tired." },
+                    { label: "Nâng cao HSG", text: "'If I were you, I would study harder,' she said. → She said that if she were me, she would study harder. (Mixed conditional giữ nguyên)" }
+                ],
+                notes: "Lưu ý: Không lùi thì khi động từ tường thuật ở Present/Present Perfect hoặc câu nói là chân lý."
+            },
+            {
+                id: 4,
+                title: "4. Conditionals & Mixed Conditionals",
+                def: "Câu điều kiện diễn tả giả định. Có 4 loại chính + mixed.",
+                formula: `
+                    <h3>4 Loại Chính + Mixed</h3>
+                    <p>Type 3: If + Past Perfect, would have + V3<br>
+                    Mixed: If + Past Perfect, would + V (hiện tại)</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "If it rains, we will stay home." },
+                    { label: "Nâng cao HSG", text: "If I had studied harder, I would be at university now. (Mixed 3-2)" }
+                ],
+                notes: "Ngoại lệ: Unless = if not. Sai thường gặp: 'If I would have known' → 'If I had known'."
+            },
+            {
+                id: 5,
+                title: "5. Subjunctive Mood (Câu giả định)",
+                def: "Mood giả định dùng để diễn tả mong muốn, đề nghị, yêu cầu không có thật.",
+                formula: `
+                    <h3>Cấu Trúc Chính</h3>
+                    <p>That + S + V (nguyên thể) sau: suggest, recommend, insist, it is important that...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I suggest that he study harder." },
+                    { label: "Nâng cao HSG", text: "It is high time that the government took action to reduce pollution. (It is time + Past Simple)" }
+                ],
+                notes: "Lưu ý: Were thay cho was trong tất cả ngôi (If I were you...)."
+            },
+            {
+                id: 6,
+                title: "6. Gerund & Infinitive",
+                def: "Gerund (V-ing) làm chủ ngữ/tân ngữ, Infinitive (to V) diễn tả mục đích hoặc sau một số động từ.",
+                formula: `
+                    <h3>Động Từ Theo Sau</h3>
+                    <p>Gerund: enjoy, mind, avoid<br>
+                    Infinitive: decide, want, hope<br>
+                    Cả hai (ý khác nhau): stop, remember, try</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I enjoy swimming." },
+                    { label: "Nâng cao HSG", text: "I remember locking the door, but now it is open. (Nhớ đã làm - gerund)" }
+                ],
+                notes: "Sai phổ biến: 'I look forward to see you' → 'to seeing you'."
+            },
+            {
+                id: 7,
+                title: "7. Participles & Participle Clauses",
+                def: "Present Participle (V-ing) và Past Participle (V3/ed) dùng làm tính từ hoặc rút gọn mệnh đề.",
+                formula: `
+                    <h3>Rút Gọn Mệnh Đề</h3>
+                    <p>Because he was tired → Being tired, he went to bed early.<br>
+                    The man who was injured → The injured man</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "The broken window needs repairing." },
+                    { label: "Nâng cao HSG", text: "Having finished the report, she sent it to the manager. (Perfect Participle)" }
+                ],
+                notes: "Lưu ý: Dangling participle khi chủ ngữ không khớp."
+            },
+            {
+                id: 8,
+                title: "8. Modal Verbs (Basic & Perfect Modal)",
+                def: "Modal verbs diễn tả khả năng, sự cho phép, lời khuyên, suy đoán.",
+                formula: `
+                    <h3>Perfect Modal</h3>
+                    <p>must have + V3 (chắc chắn đã)<br>
+                    could have + V3 (có thể đã)<br>
+                    should have + V3 (lẽ ra nên)</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "You must wear a helmet." },
+                    { label: "Nâng cao HSG", text: "The plane must have been delayed by the storm." }
+                ],
+                notes: "Ngoại lệ: Needn't have + V3 (không cần thiết đã làm nhưng đã làm)."
+            },
+            {
+                id: 9,
+                title: "9. Comparisons (Double/Parallel Comparison)",
+                def: "So sánh hơn, nhất, kép và song song.",
+                formula: `
+                    <h3>Double & Parallel</h3>
+                    <p>The + comparative + S + V, the + comparative + S + V<br>
+                    More and more + adj</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "This book is more interesting than that one." },
+                    { label: "Nâng cao HSG", text: "The more you practice, the better you will speak." }
+                ],
+                notes: "Lưu ý: Không dùng 'more better'."
+            },
+            {
+                id: 10,
+                title: "10. Articles (A, An, The & Zero)",
+                def: "Mạo từ xác định cách dùng cụ thể.",
+                formula: `
+                    <h3>Zero Article</h3>
+                    <p>Trước danh từ không đếm được trừu tượng, tên bệnh, môn học, bữa ăn.</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I have a dog." },
+                    { label: "Nâng cao HSG", text: "The rich should help the poor. (The + adj = nhóm người)" }
+                ],
+                notes: "Sai phổ biến: 'The Hanoi' (thành phố) → 'Hanoi'."
+            },
+            {
+                id: 11,
+                title: "11. Nouns & Pronouns",
+                def: "Danh từ đếm/không đếm, đại từ nhân xưng, phản thân, sở hữu.",
+                formula: `
+                    <h3>Đại Từ Phản Thân</h3>
+                    <p>myself, yourself, himself...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "This is my book." },
+                    { label: "Nâng cao HSG", text: "One should do one's best. (Formal one/oneself)" }
+                ],
+                notes: "Lưu ý: None of + plural noun + plural verb."
+            },
+            {
+                id: 12,
+                title: "12. Adjectives & Adverbs (Order of Adjectives)",
+                def: "Thứ tự tính từ: Opinion-Size-Age-Shape-Color-Origin-Material-Purpose.",
+                formula: `
+                    <h3>Thứ Tự OSASCOMP</h3>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "A beautiful small old house." },
+                    { label: "Nâng cao HSG", text: "She wore a stunning long red Italian silk evening dress." }
+                ],
+                notes: "Adverb đứng sau động từ, trước tính từ."
+            },
+            {
+                id: 13,
+                title: "13. Prepositions",
+                def: "Giới từ chỉ thời gian, nơi chốn, chuyển động.",
+                formula: `
+                    <h3>Phân Biệt at/on/in</h3>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I will meet you at 5 pm." },
+                    { label: "Nâng cao HSG", text: "The book is on the shelf but under the table in the corner." }
+                ],
+                notes: "Sai thường: 'discuss about' → 'discuss' (không giới từ)."
+            },
+            {
+                id: 14,
+                title: "14. Conjunctions & Connectors",
+                def: "Liên từ và từ nối diễn tả mối quan hệ logic.",
+                formula: `
+                    <h3>Connectors Nâng Cao</h3>
+                    <p>Moreover, furthermore, nevertheless, consequently...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I was tired but I finished the work." },
+                    { label: "Nâng cao HSG", text: "Not only did he pass the exam, but he also got the highest score." }
+                ],
+                notes: "Although/though + clause, despite/in spite of + noun."
+            },
+            {
+                id: 15,
+                title: "15. Relative Clauses (Reduced relative clauses)",
+                def: "Mệnh đề quan hệ định nghĩa hoặc bổ nghĩa, có thể rút gọn bằng participle.",
+                formula: `
+                    <h3>Rút Gọn</h3>
+                    <p>who/which + be + V-ing/V3 → V-ing/V3</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "The man who is standing there is my teacher." },
+                    { label: "Nâng cao HSG", text: "The book written by J.K. Rowling has sold millions of copies. (Reduced)" }
+                ],
+                notes: "That dùng cho cả người/vật trong defining clause."
+            },
+            {
+                id: 16,
+                title: "16. Subject-Verb Agreement",
+                def: "Chủ-ngữ hòa hợp với động từ.",
+                formula: `
+                    <h3>Trường Hợp Đặc Biệt</h3>
+                    <p>Neither...nor, either...or, a number of + plural, the number of + singular</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "The team is winning." },
+                    { label: "Nâng cao HSG", text: "Not only the students but also the teacher is excited." }
+                ],
+                notes: "Collective nouns như family, government có thể dùng singular/plural tùy ngữ cảnh."
+            },
+            {
+                id: 17,
+                title: "17. Inversion (15 cấu trúc đảo ngữ)",
+                def: "Đảo ngữ để nhấn mạnh hoặc theo sau một số từ phủ định.",
+                formula: `
+                    <h3>15 Cấu Trúc Phổ Biến HSG</h3>
+                    <ol style="font-size:0.95rem;">
+                        <li>Never / Seldom / Rarely + aux + S + V</li>
+                        <li>No sooner ... than ...</li>
+                        <li>Only when / Only after ...</li>
+                        <li>Hardly / Scarcely ... when ...</li>
+                        <li>Not only ... but also ...</li>
+                        <li>So + adj + that ...</li>
+                        <li>Such + N + that ...</li>
+                        <li>Under no circumstances ...</li>
+                        <li>At no time ...</li>
+                        <li>Not until ...</li>
+                        <li>Had it not been for ...</li>
+                        <li>Were it not for ...</li>
+                        <li>Should + S + V (điều kiện loại 1)</li>
+                        <li>Had + S + V3 (điều kiện loại 3)</li>
+                        <li>Here comes / There goes ...</li>
+                    </ol>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "Never have I seen such a beautiful view." },
+                    { label: "Nâng cao HSG", text: "No sooner had she arrived than the meeting started." }
+                ],
+                notes: "Đảo ngữ chỉ dùng trong văn viết trang trọng."
+            },
+            {
+                id: 18,
+                title: "18. Cleft Sentences (Câu chẻ)",
+                def: "Nhấn mạnh một thành phần trong câu.",
+                formula: `
+                    <h3>3 Loại Chính</h3>
+                    <p>It is/was + ... + that/who ...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "It was Tom who broke the window." },
+                    { label: "Nâng cao HSG", text: "What I need most is your support." }
+                ],
+                notes: "Dùng What/Where/When/Why để chẻ."
+            },
+            {
+                id: 19,
+                title: "19. Tag Questions (Trường hợp đặc biệt)",
+                def: "Câu hỏi đuôi.",
+                formula: `
+                    <h3>Đặc Biệt</h3>
+                    <p>I am → aren't I?<br>
+                    Let's → shall we?<br>
+                    Imperative → will/won't you?</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "You are coming, aren't you?" },
+                    { label: "Nâng cao HSG", text: "Don't forget, will you?" }
+                ],
+                notes: "Câu mệnh lệnh phủ định: won't you?"
+            },
+            {
+                id: 20,
+                title: "20. Word Formation",
+                def: "Tạo từ mới bằng tiền tố, hậu tố.",
+                formula: `
+                    <h3>Phổ Biến</h3>
+                    <p>un-, dis-, im-, -ness, -tion, -ment, -ful, -less</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "happy → unhappy" },
+                    { label: "Nâng cao HSG", text: "success → successful → successfully" }
+                ],
+                notes: "Biết quy tắc thay đổi tính từ → danh từ."
+            },
+            {
+                id: 21,
+                title: "21. Phrasal Verbs (Commonly used in HSG exams)",
+                def: "Động từ kép thường gặp trong kỳ thi HSG.",
+                formula: `
+                    <h3>Top 15 Phrasal Verbs HSG</h3>
+                    <p>give up, look forward to, put off, turn down, break down, carry on...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "I will give up smoking." },
+                    { label: "Nâng cao HSG", text: "The meeting has been put off until next week." }
+                ],
+                notes: "Phrasal verbs thường xuất hiện trong sentence transformation."
+            },
+            {
+                id: 22,
+                title: "22. Collocations",
+                def: "Cụm từ cố định thường dùng cùng nhau.",
+                formula: `
+                    <h3>Ví dụ</h3>
+                    <p>make a decision, do homework, heavy rain, strong wind</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "make a phone call" },
+                    { label: "Nâng cao HSG", text: "commit a crime / commit suicide" }
+                ],
+                notes: "Không nói 'do a decision'."
+            },
+            {
+                id: 23,
+                title: "23. Idioms",
+                def: "Thành ngữ Anh ngữ phổ biến trong HSG.",
+                formula: `
+                    <h3>Top Idioms</h3>
+                    <p>break the ice, hit the nail on the head, once in a blue moon...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "It's raining cats and dogs." },
+                    { label: "Nâng cao HSG", text: "He has a chip on his shoulder." }
+                ],
+                notes: "Dùng trong writing và speaking để đạt điểm cao."
+            },
+            {
+                id: 24,
+                title: "24. Sentence Transformation (Key structures)",
+                def: "Biến đổi câu giữ nguyên nghĩa (cấu trúc then chốt).",
+                formula: `
+                    <h3>Cấu Trúc Quan Trọng</h3>
+                    <p>too ... to → not ... enough to<br>
+                    so ... that → such ... that</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "The box is too heavy for me to lift. → The box is so heavy that I can't lift it." },
+                    { label: "Nâng cao HSG", text: "He last visited me two years ago. → It is two years since he visited me." }
+                ],
+                notes: "Đây là phần trọng tâm của kỳ thi HSG."
+            },
+            {
+                id: 25,
+                title: "25. Error Identification (Common pitfalls)",
+                def: "Nhận diện lỗi sai thường gặp trong văn phạm.",
+                formula: `
+                    <h3>Lỗi Phổ Biến</h3>
+                    <p>Subject-verb agreement, tense misuse, preposition error, article misuse...</p>
+                `,
+                examples: [
+                    { label: "Cơ bản", text: "Each of the students are smart. (sai → is)" },
+                    { label: "Nâng cao HSG", text: "I wish I can fly. (sai → could)" }
+                ],
+                notes: "Luyện kỹ phần này để đạt 9-10 điểm."
+            }
+        ];
+
+        // ==================== RENDER SIDEBAR ====================
+        function renderTopicList(filteredTopics) {
+            const listEl = document.getElementById('topicList');
+            listEl.innerHTML = '';
+            
+            filteredTopics.forEach(topic => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span class="topic-number">${topic.id}</span>
+                    ${topic.title}
+                `;
+                li.addEventListener('click', () => {
+                    document.querySelectorAll('.topic-list li').forEach(item => item.classList.remove('active'));
+                    li.classList.add('active');
+                    showTopic(topic);
+                    if (window.innerWidth <= 768) closeSidebar();
+                });
+                listEl.appendChild(li);
+            });
+        }
+
+        // ==================== HIỂN THỊ NỘI DUNG ====================
+        function showTopic(topic) {
+            const contentArea = document.getElementById('contentArea');
+            const currentTitle = document.getElementById('currentTitle');
+            
+            currentTitle.textContent = topic.title;
+            
+            let html = `
+                <div class="section">
+                    <h3 style="color:var(--text-main); margin-bottom:15px;">📌 Định nghĩa</h3>
+                    <p class="definition">${topic.def}</p>
+                    
+                    <h3 style="color:var(--text-main); margin-bottom:10px;">📐 Cấu trúc / Công thức</h3>
+                    <div class="formula">
+                        ${topic.formula}
+                    </div>
+                    
+                    <h3 style="color:var(--text-main); margin:25px 0 15px;">📝 Ví dụ minh họa</h3>
+            `;
+            
+            topic.examples.forEach(ex => {
+                html += `
+                    <div class="example-box">
+                        <span class="example-label">${ex.label}:</span>
+                        <strong>${ex.text}</strong>
+                    </div>
+                `;
+            });
+            
+            html += `
+                    <div class="note-box">
+                        <h4 style="color:#e74c3c; margin-bottom:10px;">⚠️ Lưu ý</h4>
+                        <p>${topic.notes}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Đặc biệt cho phần Giới thiệu
+            if (topic.id === 0) {
+                html = `
+                    <div class="welcome-hero">
+                        <h2>🎉 Chào mừng đến với Học Liệu Ngữ Pháp HSG!</h2>
+                        <p style="font-size:1.15rem; max-width:700px; margin:0 auto;">Học ngay 25 chuyên đề nâng cao nhất – dành riêng cho học sinh giỏi Tiếng Anh</p>
+                    </div>
+                ` + html;
+            }
+            
+            contentArea.innerHTML = html;
+        }
+
+        // ==================== TÌM KIẾM ====================
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('keyup', () => {
+                const term = searchInput.value.toLowerCase().trim();
+                const filtered = grammarTopics.filter(topic => 
+                    topic.title.toLowerCase().includes(term)
+                );
+                renderTopicList(filtered);
+            });
+        }
+
+        // ==================== THEME SWITCH ====================
+        function initTheme() {
+            const toggleBtn = document.getElementById('themeToggle');
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-theme');
+                toggleBtn.textContent = '☀️';
+            } else {
+                toggleBtn.textContent = '🌙';
+            }
+            
+            toggleBtn.addEventListener('click', () => {
+                if (document.body.classList.contains('light-theme')) {
+                    document.body.classList.remove('light-theme');
+                    toggleBtn.textContent = '🌙';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.add('light-theme');
+                    toggleBtn.textContent = '☀️';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        }
+
+        // ==================== MOBILE MENU ====================
+        function initMobileMenu() {
+            const sidebarEl = document.getElementById('sidebar');
+            const menuBtn = document.getElementById('menuBtn');
+            const overlay = document.getElementById('overlay');
+            
+            menuBtn.addEventListener('click', () => {
+                sidebarEl.classList.toggle('open');
+                overlay.classList.toggle('show');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebarEl.classList.remove('open');
+                overlay.classList.remove('show');
+            });
+        }
+
+        // ==================== KHỞI ĐỘNG ====================
+        function init() {
+            renderTopicList(grammarTopics);
+            setupSearch();
+            initTheme();
+            initMobileMenu();
+            
+            // Mặc định hiển thị phần GIỚI THIỆU đầu tiên
+            setTimeout(() => {
+                const firstLi = document.querySelector('.topic-list li');
+                if (firstLi) {
+                    firstLi.classList.add('active');
+                    showTopic(grammarTopics[0]);   // Chính là phần Giới thiệu
+                }
+            }, 150);
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
